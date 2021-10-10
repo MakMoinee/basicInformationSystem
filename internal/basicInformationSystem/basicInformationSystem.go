@@ -21,4 +21,5 @@ func NewService() IBasic {
 
 func (svc *service) GetStudentInfoByTeacherID(id string) {
 	log.Info("Inside basicService,GetStudentInfoByTeacherID")
+	log.Info(id)
 }

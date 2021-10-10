@@ -2,9 +2,11 @@ package routes
 
 import (
 	"net/http"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 
+	"github.com/MakMoinee/basicInformationSystem/cmd/webapp/response"
 	basicinformationsystem "github.com/MakMoinee/basicInformationSystem/internal/basicInformationSystem"
 	"github.com/MakMoinee/basicInformationSystem/internal/common"
 	"github.com/MakMoinee/go-mith/pkg/goserve"
@@ -46,10 +48,11 @@ func initiateRoute(httpService *goserve.Service, routeHandler IRoutes) {
 func (svc *routeService) GetStudentInfoByTeacherID(w http.ResponseWriter, r *http.Request) {
 	log.Println("Inside routes,GetStudentInfoByTeacherID")
 
-	id := r.URL.Query().Get("id")
+	// id := r.URL.Query().Get("id")
+	str := strings.Split(r.URL.Path, "/")
+	id := str[3]
 
 	svc.BasicService.GetStudentInfoByTeacherID(id)
-	w.Header().Set(common.ContentTypeKey, common.ContentTypeValue)
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Hello World&"))
+
+	response.Success(id, w)
 }
